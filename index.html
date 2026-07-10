@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Setor de TI — Instituto CDT</title>
+<style>
+  :root{
+    --bg:#f6f8f7;
+    --surface:#ffffff;
+    --surface-2:#ecf1ef;
+    --ink:#18221e;
+    --ink-2:#48584f;
+    --ink-3:#7b8b83;
+    --line:#dce3e0;
+    --accent:#0e6b5c;
+    --accent-2:#12897a;
+    --accent-soft:#e0efeb;
+    --accent-ink:#0a5347;
+    --warn:#a3620a;
+    --warn-soft:#f6ecd9;
+    --ghost:#e5ebe8;
+    --shadow:0 1px 2px rgba(18,40,33,.05),0 10px 30px rgba(18,40,33,.08);
+    --shadow-lg:0 2px 6px rgba(18,40,33,.06),0 24px 60px rgba(18,40,33,.12);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#131a17;
+      --surface:#1b2420;
+      --surface-2:#222e29;
+      --ink:#e9efec;
+      --ink-2:#a7b7b0;
+      --ink-3:#71837c;
+      --line:#2e3d37;
+      --accent:#3cb09b;
+      --accent-2:#4cc4ae;
+      --accent-soft:#1c3831;
+      --accent-ink:#84d4c4;
+      --warn:#d9a04a;
+      --warn-soft:#3a2f1c;
+      --ghost:#1e2925;
+      --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+      --shadow-lg:0 2px 6px rgba(0,0,0,.35),0 24px 60px rgba(0,0,0,.5);
+    }
+  }
+  :root[data-theme="light"]{
+    --bg:#f6f8f7; --surface:#ffffff; --surface-2:#ecf1ef;
+    --ink:#18221e; --ink-2:#48584f; --ink-3:#7b8b83; --line:#dce3e0;
+    --accent:#0e6b5c; --accent-2:#12897a; --accent-soft:#e0efeb; --accent-ink:#0a5347;
+    --warn:#a3620a; --warn-soft:#f6ecd9; --ghost:#e5ebe8;
+    --shadow:0 1px 2px rgba(18,40,33,.05),0 10px 30px rgba(18,40,33,.08);
+    --shadow-lg:0 2px 6px rgba(18,40,33,.06),0 24px 60px rgba(18,40,33,.12);
+  }
+  :root[data-theme="dark"]{
+    --bg:#131a17; --surface:#1b2420; --surface-2:#222e29;
+    --ink:#e9efec; --ink-2:#a7b7b0; --ink-3:#71837c; --line:#2e3d37;
+    --accent:#3cb09b; --accent-2:#4cc4ae; --accent-soft:#1c3831; --accent-ink:#84d4c4;
+    --warn:#d9a04a; --warn-soft:#3a2f1c; --ghost:#1e2925;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+    --shadow-lg:0 2px 6px rgba(0,0,0,.35),0 24px 60px rgba(0,0,0,.5);
+  }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Segoe UI Variable Text","Segoe UI",system-ui,-apple-system,sans-serif;
+    font-size:16px;line-height:1.6;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,h4{font-family:"Segoe UI Variable Display","Segoe UI",system-ui,sans-serif;line-height:1.15;text-wrap:balance;margin:0}
+  .mono{font-family:"Cascadia Code","Consolas",ui-monospace,monospace}
+  a{color:var(--accent-ink)}
+  button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+  button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+
+  /* ===== reveal ===== */
+  .rv{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
+  .rv.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto}
+    *,*::before,*::after{animation:none!important;transition:none!important}
+    .rv{opacity:1;transform:none}
+  }
+
+  /* ===== nav ===== */
+  .topnav{
+    position:sticky;top:0;z-index:50;
+    background:color-mix(in srgb, var(--bg) 82%, transparent);
+    backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+    display:flex;align-items:center;gap:2px;
+    padding:10px 24px;overflow-x:auto;
+  }
+  .topnav .brand{font-weight:700;font-size:14px;letter-spacing:.04em;color:var(--accent-ink);margin-right:14px;white-space:nowrap}
+  .topnav a{font-size:13px;color:var(--ink-2);text-decoration:none;padding:6px 11px;border-radius:99px;white-space:nowrap}
+  .topnav a:hover{background:var(--surface-2);color:var(--ink)}
+  .topnav a.active{background:var(--accent-soft);color:var(--accent-ink);font-weight:600}
+
+  main{max-width:1020px;margin:0 auto;padding:0 24px 96px}
+  section{padding-top:88px;position:relative}
+  .sec-head{position:relative;margin-bottom:32px}
+  .sec-num{
+    position:absolute;top:-54px;left:-10px;z-index:-1;
+    font-family:"Segoe UI Variable Display","Segoe UI",system-ui,sans-serif;
+    font-size:130px;font-weight:800;color:var(--ghost);line-height:1;
+    letter-spacing:-.04em;user-select:none;
+  }
+  .eyebrow{
+    font-family:"Cascadia Code","Consolas",ui-monospace,monospace;
+    font-size:12px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--accent-ink);margin-bottom:10px;display:flex;align-items:center;gap:10px;
+  }
+  .eyebrow::before{content:"";width:26px;height:2px;background:var(--accent);border-radius:2px}
+  .section-title{font-size:clamp(26px,4vw,34px);font-weight:750;letter-spacing:-.01em;margin-bottom:10px}
+  .section-lead{color:var(--ink-2);max-width:66ch;margin:0;font-size:16.5px}
+
+  /* ===== hero ===== */
+  .hero{position:relative;padding:110px 0 40px;isolation:isolate}
+  .hero::before{
+    content:"";position:absolute;inset:-120px -50vw 0;z-index:-2;
+    background:
+      radial-gradient(620px 340px at 78% 8%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 70%),
+      radial-gradient(520px 320px at 12% 88%, color-mix(in srgb, var(--accent-2) 10%, transparent), transparent 70%);
+  }
+  .hero::after{
+    content:"";position:absolute;inset:-40px -50vw 0;z-index:-1;
+    background-image:radial-gradient(color-mix(in srgb, var(--ink) 13%, transparent) 1px, transparent 1px);
+    background-size:26px 26px;
+    -webkit-mask-image:radial-gradient(640px 460px at 72% 20%, #000 20%, transparent 75%);
+    mask-image:radial-gradient(640px 460px at 72% 20%, #000 20%, transparent 75%);
+  }
+  .hero .eyebrow{margin-bottom:24px}
+  .hero h1{font-size:clamp(38px,6.5vw,62px);font-weight:790;letter-spacing:-.02em;max-width:17ch}
+  .hero h1 .grad{
+    background:linear-gradient(100deg,var(--accent) 10%,var(--accent-2) 90%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero p{font-size:18.5px;color:var(--ink-2);max-width:56ch;margin:22px 0 0}
+  .hero-stats{display:flex;gap:0;flex-wrap:wrap;margin-top:44px;border:1px solid var(--line);border-radius:16px;background:var(--surface);box-shadow:var(--shadow);overflow:hidden}
+  .hero-stats>div{flex:1;min-width:160px;padding:20px 24px;border-right:1px solid var(--line)}
+  .hero-stats>div:last-child{border-right:none}
+  .hero-stats .n{
+    font-family:"Segoe UI Variable Display","Segoe UI",system-ui,sans-serif;
+    font-size:32px;font-weight:800;color:var(--accent-ink);letter-spacing:-.02em;line-height:1.1;
+    font-variant-numeric:tabular-nums;
+  }
+  .hero-stats .l{font-size:13px;color:var(--ink-3);margin-top:2px}
+  .hero-own{
+    margin-top:16px;display:flex;gap:16px;align-items:flex-start;
+    background:linear-gradient(135deg,var(--accent-soft),var(--surface));
+    border:1px solid var(--accent);border-radius:16px;padding:18px 22px;box-shadow:var(--shadow);
+  }
+  .hero-own-tag{
+    font-family:"Cascadia Code","Consolas",ui-monospace,monospace;
+    font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;
+    color:var(--accent-ink);background:var(--surface);border:1px solid var(--accent);
+    padding:4px 12px;border-radius:99px;white-space:nowrap;margin-top:2px;
+  }
+  .hero-own p{margin:0;font-size:14.5px;color:var(--ink-2);max-width:66ch}
+  .hero-own strong{color:var(--accent-ink)}
+  @media (max-width:600px){.hero-own{flex-direction:column;gap:10px}}
+
+  /* ===== antes/depois ===== */
+  .duo{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:30px}
+  @media (max-width:720px){.duo{grid-template-columns:1fr}}
+  .panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:26px;box-shadow:var(--shadow)}
+  .panel.hoje{border-style:dashed;background:transparent;box-shadow:none}
+  .panel h3{font-size:14px;font-weight:700;margin-bottom:16px;letter-spacing:.1em;text-transform:uppercase;font-family:"Cascadia Code","Consolas",ui-monospace,monospace;color:var(--ink-3)}
+  .panel.agora h3{color:var(--accent-ink)}
+  .panel ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:11px}
+  .panel li{padding-left:24px;position:relative;font-size:14.5px;color:var(--ink-2)}
+  .panel.hoje li::before{content:"✕";position:absolute;left:0;color:var(--ink-3);font-size:12px;top:3px}
+  .panel.agora li::before{content:"✓";position:absolute;left:0;color:var(--accent);font-weight:700;font-size:13px;top:2px}
+
+  /* ===== ecossistema ===== */
+  .eco-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px;margin-top:30px}
+  .eco{
+    background:var(--surface);border:1px solid var(--line);border-radius:14px;
+    padding:18px;box-shadow:var(--shadow);position:relative;overflow:hidden;
+    transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease;
+  }
+  .eco:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:var(--shadow-lg)}
+  .eco::after{
+    content:"";position:absolute;top:0;left:0;right:0;height:3px;
+    background:linear-gradient(90deg,var(--accent),var(--accent-2));
+    opacity:0;transition:opacity .18s ease;
+  }
+  .eco:hover::after{opacity:1}
+  .eco .ic{font-size:24px;margin-bottom:10px}
+  .eco h4{font-size:14.5px;font-weight:700;margin-bottom:3px}
+  .eco p{margin:0;font-size:12.5px;color:var(--ink-3);line-height:1.45}
+  .eco .plat{display:flex;gap:5px;margin-top:10px;flex-wrap:wrap}
+  .eco .plat span{
+    font-family:"Cascadia Code","Consolas",ui-monospace,monospace;
+    font-size:10.5px;padding:2px 8px;border-radius:99px;
+    background:var(--surface-2);color:var(--ink-2);letter-spacing:.04em;
+  }
+  .stack{margin-top:36px}
+  .stack h3{font-size:16px;font-weight:700;margin-bottom:16px}
+  .stack-groups{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+  .stack-g{background:var(--surface-2);border-radius:14px;padding:16px 18px}
+  .stack-g .g-t{
+    font-family:"Cascadia Code","Consolas",ui-monospace,monospace;
+    font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-bottom:10px;
+  }
+  .stack-g .chips{display:flex;flex-wrap:wrap;gap:6px}
+  .stack-g .chips span{
+    font-size:12.5px;padding:4px 12px;border-radius:99px;background:var(--surface);
+    border:1px solid var(--line);color:var(--ink-2);font-weight:500;
+  }
+
+  /* ===== organograma ===== */
+  .org{display:flex;flex-direction:column;align-items:center;margin-top:34px}
+  .org-row{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+  .org-link{width:2px;height:28px;background:linear-gradient(var(--line),var(--accent));opacity:.7}
+  .org-card{
+    background:var(--surface);border:1px solid var(--line);border-radius:14px;
+    padding:16px 22px;min-width:200px;text-align:left;box-shadow:var(--shadow);
+    transition:border-color .15s,transform .15s,box-shadow .15s;
+  }
+  .org-card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+  .org-card[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+  .org-card .role{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);font-family:"Cascadia Code","Consolas",ui-monospace,monospace}
+  .org-card .name{font-size:18px;font-weight:750;margin-top:2px;display:block}
+  .org-card .tag{display:inline-block;margin-top:7px;font-size:11.5px;padding:2px 10px;border-radius:99px;background:var(--surface-2);color:var(--ink-2)}
+  .org-card.novo .tag{background:var(--warn-soft);color:var(--warn)}
+  .org-detail{
+    margin-top:26px;background:var(--surface);border:1px solid var(--accent);
+    border-radius:16px;padding:24px 26px;width:100%;max-width:660px;box-shadow:var(--shadow-lg);
+  }
+  .org-detail[hidden]{display:none}
+  .org-detail h4{font-size:17px;color:var(--accent-ink);margin-bottom:10px}
+  .org-detail ul{margin:0;padding-left:20px;color:var(--ink-2);font-size:14.5px;display:flex;flex-direction:column;gap:7px}
+  .org-hint{font-size:13px;color:var(--ink-3);text-align:center;margin-top:16px}
+
+  /* ===== tabs fluxo ===== */
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin:30px 0 24px}
+  .tab{padding:9px 20px;border-radius:99px;border:1px solid var(--line);font-size:14px;color:var(--ink-2);background:var(--surface);transition:border-color .15s}
+  .tab:hover{border-color:var(--accent)}
+  .tab[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+  :root[data-theme="dark"] .tab[aria-selected="true"]{color:#0e1613}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .tab[aria-selected="true"]{color:#0e1613}}
+  .flow{display:flex;flex-direction:column}
+  .flow[hidden]{display:none}
+  .step{display:grid;grid-template-columns:44px 1fr;gap:18px}
+  .step .marker{display:flex;flex-direction:column;align-items:center}
+  .step .dot{
+    width:34px;height:34px;border-radius:50%;flex-shrink:0;
+    background:var(--accent-soft);color:var(--accent-ink);
+    display:flex;align-items:center;justify-content:center;
+    font-weight:700;font-size:14px;border:1px solid var(--accent);
+  }
+  .step .rail{width:2px;flex:1;background:var(--line);margin:4px 0}
+  .step:last-child .rail{display:none}
+  .step .body{padding-bottom:28px}
+  .step h4{font-size:16px;font-weight:700}
+  .step p{margin:4px 0 0;font-size:14px;color:var(--ink-2);max-width:64ch}
+  .step .who{
+    display:inline-block;margin-top:9px;font-size:11.5px;letter-spacing:.06em;
+    font-family:"Cascadia Code","Consolas",ui-monospace,monospace;
+    background:var(--surface-2);padding:3px 11px;border-radius:99px;color:var(--ink-2);
+  }
+
+  /* ===== github ===== */
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:30px}
+  @media (max-width:760px){.grid3{grid-template-columns:1fr}}
+  .pillar{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:24px;box-shadow:var(--shadow)}
+  .pillar .ico{
+    width:42px;height:42px;border-radius:12px;background:var(--accent-soft);
+    display:flex;align-items:center;justify-content:center;font-size:19px;margin-bottom:15px;
+  }
+  .pillar h4{font-size:16px;font-weight:700;margin-bottom:6px}
+  .pillar p{margin:0;font-size:13.5px;color:var(--ink-2)}
+  .env-flow{
+    display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:center;
+    background:var(--surface);border:1px solid var(--line);border-radius:16px;
+    padding:26px;margin-top:18px;box-shadow:var(--shadow);
+  }
+  .env{font-family:"Cascadia Code","Consolas",ui-monospace,monospace;font-size:13.5px;padding:11px 20px;border-radius:9px;border:1px solid var(--line);background:var(--surface-2)}
+  .env.prod{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:600}
+  :root[data-theme="dark"] .env.prod{color:#0e1613}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .env.prod{color:#0e1613}}
+  .env-arrow{color:var(--ink-3);font-size:18px}
+  .ai-box{
+    margin-top:18px;border-radius:16px;padding:26px;
+    background:linear-gradient(135deg,var(--accent-soft),var(--surface));
+    border:1px solid var(--accent);box-shadow:var(--shadow);
+  }
+  .ai-head{display:flex;gap:16px;align-items:flex-start}
+  .ai-head .ico{
+    width:42px;height:42px;border-radius:12px;background:var(--accent);flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;font-size:19px;
+  }
+  .ai-head h4{font-size:16.5px;font-weight:750;color:var(--accent-ink);margin-bottom:6px}
+  .ai-head p{margin:0;font-size:14.5px;color:var(--ink-2);max-width:70ch}
+  .ai-flow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:20px}
+  .ai-flow .env{font-size:12.5px;padding:9px 15px;background:var(--surface)}
+
+  /* ===== ownership ===== */
+  .own-table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:16px;background:var(--surface);box-shadow:var(--shadow);margin-top:30px}
+  table{border-collapse:collapse;width:100%;font-size:14px;min-width:600px}
+  th{
+    text-align:left;font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--ink-3);font-weight:600;padding:14px 18px;border-bottom:1px solid var(--line);
+    font-family:"Cascadia Code","Consolas",ui-monospace,monospace;background:var(--surface-2);
+  }
+  td{padding:12px 18px;border-bottom:1px solid var(--line);color:var(--ink-2)}
+  tr:last-child td{border-bottom:none}
+  td strong{color:var(--ink)}
+  .chip{display:inline-block;font-size:12px;padding:2px 11px;border-radius:99px;background:var(--accent-soft);color:var(--accent-ink);font-weight:600}
+  .chip.tbd{background:var(--surface-2);color:var(--ink-3);font-weight:500;font-style:italic}
+  .sub-title{font-size:19px;font-weight:750;margin:44px 0 8px}
+  .callout{
+    margin-top:20px;border-left:3px solid var(--accent);background:var(--surface);
+    border-radius:0 14px 14px 0;padding:18px 22px;font-size:14.5px;color:var(--ink-2);box-shadow:var(--shadow);
+  }
+  .callout strong{color:var(--ink)}
+
+  /* ===== onboarding ===== */
+  .acc{display:flex;flex-direction:column;gap:12px;margin-top:30px}
+  .acc-item{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:var(--shadow)}
+  .acc-btn{width:100%;display:flex;align-items:center;gap:14px;text-align:left;padding:19px 24px}
+  .acc-btn:hover{background:var(--surface-2)}
+  .acc-btn .phase{
+    font-family:"Cascadia Code","Consolas",ui-monospace,monospace;font-size:11.5px;
+    background:var(--accent-soft);color:var(--accent-ink);padding:3px 11px;border-radius:99px;
+    white-space:nowrap;font-weight:600;
+  }
+  .acc-btn .t{font-weight:700;font-size:16px;flex:1}
+  .acc-btn .chev{color:var(--ink-3);transition:transform .2s}
+  .acc-item.open .chev{transform:rotate(90deg)}
+  .acc-body{display:none;padding:0 24px 22px;color:var(--ink-2);font-size:14.5px}
+  .acc-item.open .acc-body{display:block}
+  .acc-body ul{margin:10px 0 0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
+  .acc-note{margin-top:16px;font-size:13.5px;color:var(--ink-3)}
+
+  /* ===== implantação ===== */
+  .road{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:30px}
+  @media (max-width:760px){.road{grid-template-columns:1fr}}
+  .road-col{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:24px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+  .road-col::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent-2))}
+  .road-col .wave{
+    font-family:"Segoe UI Variable Display","Segoe UI",system-ui,sans-serif;
+    font-size:40px;font-weight:800;color:var(--ghost);line-height:1;letter-spacing:-.03em;
+  }
+  .road-col h4{font-size:16px;font-weight:750;margin:6px 0 4px;color:var(--accent-ink)}
+  .road-col .sub{font-size:13px;color:var(--ink-3);margin:0 0 16px}
+  .road-col ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+  .road-col li{font-size:14px;color:var(--ink-2);padding-left:20px;position:relative}
+  .road-col li::before{content:"";position:absolute;left:0;top:8px;width:8px;height:8px;border-radius:50%;background:var(--accent)}
+
+  /* ===== fechamento ===== */
+  .next{
+    position:relative;border-radius:20px;padding:34px;margin-top:30px;overflow:hidden;
+    background:linear-gradient(135deg,var(--accent) 0%,var(--accent-2) 100%);
+    color:#fff;box-shadow:var(--shadow-lg);
+  }
+  :root[data-theme="dark"] .next{color:#0e1613}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .next{color:#0e1613}}
+  .next::after{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background-image:radial-gradient(rgba(255,255,255,.25) 1px,transparent 1px);
+    background-size:22px 22px;
+    -webkit-mask-image:radial-gradient(420px 300px at 90% 10%, #000, transparent 70%);
+    mask-image:radial-gradient(420px 300px at 90% 10%, #000, transparent 70%);
+  }
+  .next h3{font-size:22px;margin-bottom:16px;font-weight:750}
+  .next ol{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:9px;font-size:15.5px}
+  footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-3);text-align:center}
+
+  /* ===== refinamentos visuais ===== */
+  ::selection{background:var(--accent);color:#fff}
+  .progress{
+    position:fixed;top:0;left:0;height:3px;width:0;z-index:60;
+    background:linear-gradient(90deg,var(--accent),var(--accent-2));
+    border-radius:0 3px 3px 0;
+  }
+  .sec-num{
+    color:transparent;-webkit-text-stroke:1.5px var(--line);
+  }
+  @supports not (-webkit-text-stroke:1px black){.sec-num{color:var(--ghost)}}
+
+  /* faixas de fundo alternadas */
+  section.band::before{
+    content:"";position:absolute;top:36px;bottom:-44px;left:50%;transform:translateX(-50%);
+    width:100vw;z-index:-2;
+    background:
+      radial-gradient(560px 300px at 85% 8%, color-mix(in srgb, var(--accent) 7%, transparent), transparent 70%),
+      linear-gradient(180deg,transparent,var(--surface-2) 10%,var(--surface-2) 90%,transparent);
+  }
+  section.band::after{
+    content:"";position:absolute;top:36px;bottom:-44px;left:50%;transform:translateX(-50%);
+    width:100vw;z-index:-1;pointer-events:none;
+    background-image:radial-gradient(color-mix(in srgb, var(--ink) 10%, transparent) 1px, transparent 1px);
+    background-size:24px 24px;
+    -webkit-mask-image:radial-gradient(520px 340px at 12% 90%, #000 10%, transparent 70%);
+    mask-image:radial-gradient(520px 340px at 12% 90%, #000 10%, transparent 70%);
+  }
+
+  /* organograma: monogramas + holofote */
+  .org{position:relative}
+  .org::before{
+    content:"";position:absolute;inset:-40px -60px;z-index:-1;pointer-events:none;
+    background:radial-gradient(460px 380px at 50% 42%, color-mix(in srgb, var(--accent) 9%, transparent), transparent 70%);
+  }
+  .org-card{display:flex;align-items:center;gap:14px}
+  .org-card .avatar{
+    width:44px;height:44px;border-radius:50%;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
+    font-family:"Segoe UI Variable Display","Segoe UI",system-ui,sans-serif;
+    font-size:18px;font-weight:800;color:#fff;
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));
+    box-shadow:inset 0 -2px 6px rgba(0,0,0,.18);
+  }
+  :root[data-theme="dark"] .org-card .avatar{color:#0e1613}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .org-card .avatar{color:#0e1613}}
+  .org-card.novo .avatar{
+    background:transparent;color:var(--warn);
+    border:2px dashed var(--warn);box-shadow:none;font-size:21px;
+  }
+  .org-card .info{display:flex;flex-direction:column;align-items:flex-start}
+
+  /* fluxos: entrada animada + dots com gradiente */
+  @keyframes flowIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .flow:not([hidden]){animation:flowIn .35s ease}
+  .step .dot{background:linear-gradient(135deg,var(--accent-soft),var(--surface));border:1px solid var(--accent)}
+  .step .rail{background:linear-gradient(var(--accent),var(--line))}
+
+  /* github: arte decorativa de branches */
+  .gitart{
+    position:absolute;top:70px;right:-30px;width:300px;height:auto;
+    z-index:-1;pointer-events:none;opacity:.5;
+  }
+  .gitart path{stroke:var(--accent);fill:none;stroke-width:2;opacity:.28}
+  .gitart circle{fill:var(--accent);opacity:.38}
+  @media (max-width:900px){.gitart{display:none}}
+
+  /* tabelas: zebra + hover */
+  tbody tr:nth-child(even) td{background:color-mix(in srgb, var(--surface-2) 45%, transparent)}
+  tbody tr:hover td{background:color-mix(in srgb, var(--accent-soft) 70%, transparent)}
+
+  /* onboarding: filete gradiente no item aberto */
+  .acc-item{position:relative}
+  .acc-item.open{border-color:var(--accent)}
+  .acc-item.open::before{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:3px;
+    background:linear-gradient(var(--accent),var(--accent-2));
+  }
+
+  /* implantação: setas entre as ondas */
+  .road-col:not(:last-child)::after{
+    content:"›";position:absolute;top:50%;right:-15px;transform:translateY(-50%);
+    font-size:26px;font-weight:700;color:var(--accent);z-index:1;
+    text-shadow:0 0 8px var(--bg);
+  }
+  @media (max-width:760px){
+    .road-col:not(:last-child)::after{content:"⌄";top:auto;bottom:-24px;right:50%;transform:translateX(50%)}
+  }
+
+  /* ===== mobile ===== */
+  @media (max-width:600px){
+    main{padding:0 18px 72px}
+    section{padding-top:64px}
+    .hero{padding:64px 0 24px}
+    .hero p{font-size:16.5px}
+    .hero-stats{flex-direction:column}
+    .hero-stats>div{border-right:none;border-bottom:1px solid var(--line);padding:16px 20px}
+    .hero-stats>div:last-child{border-bottom:none}
+    .hero-stats .n{font-size:26px}
+    .sec-num{font-size:76px;top:-30px;left:-6px}
+    .section-lead{font-size:15px}
+    .topnav{padding:10px 16px}
+    .topnav .brand{margin-right:8px}
+    .org-card{min-width:0;width:100%;max-width:320px}
+    .org-row{width:100%;flex-direction:column;align-items:center}
+    .acc-btn{flex-wrap:wrap;gap:10px;padding:16px 18px}
+    .acc-btn .t{flex-basis:100%;order:2}
+    .acc-btn .chev{order:1;margin-left:auto}
+    .acc-body{padding:0 18px 18px}
+    .step{grid-template-columns:38px 1fr;gap:12px}
+    .step .dot{width:30px;height:30px;font-size:13px}
+    .env-flow,.ai-box{padding:20px 16px}
+    .ai-head{flex-direction:column}
+    .next{padding:26px 22px}
+    .eco-grid{grid-template-columns:1fr 1fr}
+  }
+  @media (max-width:400px){
+    .eco-grid{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress" aria-hidden="true"></div>
+<nav class="topnav" aria-label="Seções">
+  <span class="brand">CDT · TI</span>
+  <a href="#visao">Visão</a>
+  <a href="#ecossistema">Ecossistema</a>
+  <a href="#estrutura">Estrutura</a>
+  <a href="#fluxos">Fluxos</a>
+  <a href="#github">GitHub</a>
+  <a href="#ownership">Ownership</a>
+  <a href="#onboarding">Onboarding</a>
+  <a href="#implantacao">Implantação</a>
+</nav>
+
+<main>
+  <div class="hero">
+    <div class="eyebrow">Instituto CDT · Reunião de equipe · Julho 2026</div>
+    <h1>Tecnologia agora é um <span class="grad">setor</span>.</h1>
+    <p>Construímos por conta própria todo o ecossistema digital do Instituto. Agora damos o próximo passo: transformar essa capacidade em um setor estruturado — com processos, versionamento e documentação — para crescer com segurança.</p>
+    <div class="hero-stats rv">
+      <div><div class="n" data-count="10" data-suffix="+">10+</div><div class="l">sistemas construídos internamente</div></div>
+      <div><div class="n" data-count="3" data-suffix="">3</div><div class="l">devs no time — e crescendo</div></div>
+      <div><div class="n" data-count="100" data-suffix="%">100%</div><div class="l">tecnologia própria, sem dependência externa</div></div>
+    </div>
+    <div class="hero-own rv">
+      <span class="hero-own-tag">Nosso modelo</span>
+      <p><strong>Ownership com conhecimento circulando:</strong> quem criou o sistema segue cuidando dele — trabalho em equipe, com individualidade. E cada sistema ganha backup e documentação, para que o conhecimento nunca fique preso em uma só pessoa.</p>
+    </div>
+  </div>
+
+  <section id="visao">
+    <div class="sec-head rv">
+      <div class="sec-num">01</div>
+      <div class="eyebrow">Por que mudar</div>
+      <h2 class="section-title">De onde viemos, para onde vamos</h2>
+      <p class="section-lead">Construir tudo internamente é uma força do Instituto — mas o que nos trouxe até aqui não sustenta o próximo nível sem organização.</p>
+    </div>
+    <div class="duo">
+      <div class="panel hoje rv">
+        <h3>Hoje</h3>
+        <ul>
+          <li>Código espalhado em contas pessoais do GitHub (Igor e Alex)</li>
+          <li>Demandas chegam por qualquer canal, sem registro nem priorização</li>
+          <li>Conhecimento concentrado em quem criou cada sistema</li>
+          <li>Sem ambientes definidos: mudanças vão direto para produção</li>
+          <li>Documentação inexistente ou informal</li>
+        </ul>
+      </div>
+      <div class="panel agora rv">
+        <h3>A partir de agora</h3>
+        <ul>
+          <li>GitHub organizacional do Instituto CDT: tudo centralizado e versionado</li>
+          <li>Desenvolvimento acelerado por IA (Claude Code e Lovable) sobre uma base organizada</li>
+          <li>Canal único de demandas, com triagem e priorização</li>
+          <li>Cada sistema com dono principal + backup, e documentação padrão</li>
+          <li>Fluxo dev → homologação → produção em todos os projetos</li>
+          <li>Setor preparado para receber e formar novos devs</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="ecossistema" class="band">
+    <div class="sec-head rv">
+      <div class="sec-num">02</div>
+      <div class="eyebrow">O que já construímos</div>
+      <h2 class="section-title">Ecossistema CDT</h2>
+      <p class="section-lead">Tudo abaixo foi criado por este time, do zero. É esse patrimônio que o novo setor vai proteger, documentar e evoluir.</p>
+    </div>
+    <div class="eco-grid">
+      <div class="eco rv"><div class="ic">👥</div><h4>Área de Membros</h4><p>Plataforma dos alunos e membros</p><div class="plat"><span>web</span><span>app android</span><span>app ios</span></div></div>
+      <div class="eco rv"><div class="ic">🤝</div><h4>CRM</h4><p>Gestão de relacionamento e vendas</p><div class="plat"><span>web</span></div></div>
+      <div class="eco rv"><div class="ic">📚</div><h4>Editora</h4><p>Gestão editorial e publicações</p><div class="plat"><span>web</span></div></div>
+      <div class="eco rv"><div class="ic">💳</div><h4>Checkout</h4><p>Pagamentos e conversão de vendas</p><div class="plat"><span>web</span></div></div>
+      <div class="eco rv"><div class="ic">🎯</div><h4>Roleta de Leads</h4><p>Distribuição automática de leads</p><div class="plat"><span>web</span></div></div>
+      <div class="eco rv"><div class="ic">🩺</div><h4>Sistema de Pacientes</h4><p>Gestão e acompanhamento clínico</p><div class="plat"><span>web</span></div></div>
+      <div class="eco rv"><div class="ic">🤖</div><h4>IA Vendedora</h4><p>Atendimento e vendas com inteligência artificial</p><div class="plat"><span>ia</span><span>whatsapp</span></div></div>
+      <div class="eco rv"><div class="ic">🌐</div><h4>Site Institucional</h4><p>Presença digital do Instituto</p><div class="plat"><span>web</span></div></div>
+      <div class="eco rv"><div class="ic">📄</div><h4>Landing Pages</h4><p>Páginas de campanhas e lançamentos</p><div class="plat"><span>web</span></div></div>
+      <div class="eco rv"><div class="ic">✍️</div><h4>Blog</h4><p>Conteúdo e autoridade orgânica</p><div class="plat"><span>web</span></div></div>
+    </div>
+    <div class="stack rv">
+      <h3>Nossa stack e ferramentas</h3>
+      <div class="stack-groups">
+        <div class="stack-g"><div class="g-t">Desenvolvimento</div><div class="chips"><span>GitHub</span><span>Claude Code</span><span>Lovable</span><span>Docker</span></div></div>
+        <div class="stack-g"><div class="g-t">Dados & Infra</div><div class="chips"><span>Supabase</span><span>Hostinger</span><span>Bunny Vídeos</span><span>Google Tag Manager</span></div></div>
+        <div class="stack-g"><div class="g-t">Automação & Integrações</div><div class="chips"><span>n8n</span><span>Make</span><span>Evolution API</span></div></div>
+        <div class="stack-g"><div class="g-t">Financeiro & Gestão</div><div class="chips"><span>Asaas</span><span>BIU Notas Fiscais</span><span>Trello</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="estrutura">
+    <div class="sec-head rv">
+      <div class="sec-num">03</div>
+      <div class="eyebrow">Quem é quem</div>
+      <h2 class="section-title">Nova estrutura do setor</h2>
+      <p class="section-lead">Clique em cada pessoa para ver o papel e as responsabilidades dentro da nova estrutura.</p>
+    </div>
+    <div class="org rv">
+      <div class="org-row">
+        <button class="org-card" data-org="thiago" aria-pressed="false">
+          <span class="avatar" aria-hidden="true">T</span>
+          <span class="info">
+            <span class="role">CEO</span>
+            <span class="name">Thiago</span>
+            <span class="tag">Direção executiva</span>
+          </span>
+        </button>
+      </div>
+      <div class="org-link"></div>
+      <div class="org-row">
+        <button class="org-card" data-org="evelin" aria-pressed="false">
+          <span class="avatar" aria-hidden="true">E</span>
+          <span class="info">
+            <span class="role">Diretoria de TI</span>
+            <span class="name">Evelin</span>
+            <span class="tag">Estratégia e prioridades</span>
+          </span>
+        </button>
+      </div>
+      <div class="org-link"></div>
+      <div class="org-row">
+        <button class="org-card" data-org="igor" aria-pressed="false">
+          <span class="avatar" aria-hidden="true">I</span>
+          <span class="info">
+            <span class="role">Dev Sênior · Líder técnico</span>
+            <span class="name">Igor</span>
+            <span class="tag">Liderança do setor</span>
+          </span>
+        </button>
+      </div>
+      <div class="org-link"></div>
+      <div class="org-row">
+        <button class="org-card" data-org="alex" aria-pressed="false">
+          <span class="avatar" aria-hidden="true">A</span>
+          <span class="info">
+            <span class="role">Dev Pleno</span>
+            <span class="name">Alex</span>
+            <span class="tag">Referência técnica</span>
+          </span>
+        </button>
+        <button class="org-card novo" data-org="junior" aria-pressed="false">
+          <span class="avatar" aria-hidden="true">+</span>
+          <span class="info">
+            <span class="role">Dev Júnior</span>
+            <span class="name">Novo Dev</span>
+            <span class="tag">Em breve · onboarding</span>
+          </span>
+        </button>
+      </div>
+      <div class="org-detail" id="org-detail" hidden>
+        <h4 id="org-detail-title"></h4>
+        <ul id="org-detail-list"></ul>
+      </div>
+      <p class="org-hint">Linha de reporte: Thiago → Evelin → Igor → Alex → Novo Dev</p>
+    </div>
+  </section>
+
+  <section id="fluxos">
+    <div class="sec-head rv">
+      <div class="sec-num">04</div>
+      <div class="eyebrow">Como o trabalho chega e sai</div>
+      <h2 class="section-title">Fluxo de demandas</h2>
+      <p class="section-lead">Toda demanda passa a ter um caminho único: entra registrada, é triada, priorizada e entregue com homologação. Escolha o tipo de demanda para ver o fluxo.</p>
+    </div>
+    <div class="tabs rv" role="tablist" aria-label="Tipos de demanda">
+      <button class="tab" role="tab" aria-selected="true" data-flow="nova">Novo projeto / funcionalidade</button>
+      <button class="tab" role="tab" aria-selected="false" data-flow="suporte">Ajuste / suporte</button>
+      <button class="tab" role="tab" aria-selected="false" data-flow="incidente">Incidente (urgência)</button>
+    </div>
+
+    <div class="flow" data-flow-panel="nova">
+      <div class="step"><div class="marker"><div class="dot">1</div><div class="rail"></div></div><div class="body">
+        <h4>Solicitação registrada</h4><p>O setor solicitante abre a demanda no canal oficial de TI (board no Trello), descrevendo objetivo e resultado esperado. Nada entra "por corredor".</p><span class="who">SOLICITANTE</span>
+      </div></div>
+      <div class="step"><div class="marker"><div class="dot">2</div><div class="rail"></div></div><div class="body">
+        <h4>Triagem e alinhamento</h4><p>Igor avalia esforço, impacto e dependências. Demandas grandes são validadas com a Evelin antes de entrar na fila.</p><span class="who">IGOR · EVELIN</span>
+      </div></div>
+      <div class="step"><div class="marker"><div class="dot">3</div><div class="rail"></div></div><div class="body">
+        <h4>Priorização</h4><p>Na reunião do setor, a fila é priorizada e a demanda é atribuída ao dev responsável, considerando ownership e carga de trabalho.</p><span class="who">EQUIPE TI</span>
+      </div></div>
+      <div class="step"><div class="marker"><div class="dot">4</div><div class="rail"></div></div><div class="body">
+        <h4>Desenvolvimento com versionamento</h4><p>Trabalho em branch no GitHub da CDT, com Pull Request e revisão de código por outro dev antes de mesclar.</p><span class="who">DEV RESPONSÁVEL</span>
+      </div></div>
+      <div class="step"><div class="marker"><div class="dot">5</div><div class="rail"></div></div><div class="body">
+        <h4>Homologação com o solicitante</h4><p>A entrega é validada em ambiente de homologação por quem pediu. Só sobe para produção com aprovação registrada.</p><span class="who">SOLICITANTE · DEV</span>
+      </div></div>
+      <div class="step"><div class="marker"><div class="dot">6</div></div><div class="body">
+        <h4>Produção + documentação</h4><p>Deploy em produção, atualização da documentação do projeto e comunicação de encerramento ao solicitante.</p><span class="who">DEV RESPONSÁVEL</span>
+      </div></div>
+    </div>
+
+    <div class="flow" data-flow-panel="suporte" hidden>
+      <div class="step"><div class="marker"><div class="dot">1</div><div class="rail"></div></div><div class="body">
+        <h4>Chamado aberto no canal de suporte</h4><p>Ajustes e correções entram como chamados, com descrição do problema e print/exemplo quando possível.</p><span class="who">SOLICITANTE</span>
+      </div></div>
+      <div class="step"><div class="marker"><div class="dot">2</div><div class="rail"></div></div><div class="body">
+        <h4>Classificação</h4><p>Igor classifica: bug, ajuste rápido ou melhoria. Chamados simples são ótima porta de entrada para o Dev Júnior, com supervisão.</p><span class="who">IGOR</span>
+      </div></div>
+      <div class="step"><div class="marker"><div class="dot">3</div><div class="rail"></div></div><div class="body">
+        <h4>Atendimento pelo dono do sistema (ou backup)</h4><p>O dono principal atende; se estiver indisponível, o backup assume usando a documentação do projeto.</p><span class="who">DONO · BACKUP</span>
+      </div></div>
+      <div class="step"><div class="marker"><div class="dot">4</div></div><div class="body">
+        <h4>Validação e fechamento</h4><p>Correção validada com o solicitante e chamado encerrado com registro do que foi feito.</p><span class="who">DEV · SOLICITANTE</span>
+      </div></div>
+    </div>
+
+    <div class="flow" data-flow-panel="incidente" hidden>
+      <div class="step"><div class="marker"><div class="dot">1</div><div class="rail"></div></div><div class="body">
+        <h4>Comunicação imediata</h4><p>Sistema fora do ar ou erro crítico: aviso direto ao Igor (ou Alex na ausência), fora da fila normal.</p><span class="who">QUALQUER PESSOA</span>
+      </div></div>
+      <div class="step"><div class="marker"><div class="dot">2</div><div class="rail"></div></div><div class="body">
+        <h4>Resposta prioritária</h4><p>O incidente passa na frente de tudo. Dono do sistema atua na correção; Igor comunica status à Evelin e aos afetados.</p><span class="who">DONO · IGOR</span>
+      </div></div>
+      <div class="step"><div class="marker"><div class="dot">3</div></div><div class="body">
+        <h4>Pós-incidente</h4><p>Depois de resolvido: registro da causa, o que foi feito e o que muda para não repetir. Aprendizado vira documentação.</p><span class="who">EQUIPE TI</span>
+      </div></div>
+    </div>
+  </section>
+
+  <section id="github" class="band">
+    <svg class="gitart" viewBox="0 0 300 210" aria-hidden="true">
+      <path d="M30 190 L30 60 C30 40 45 30 65 30 L250 30"/>
+      <path d="M30 130 C30 105 55 95 80 95 L250 95"/>
+      <path d="M30 175 C30 160 50 155 70 155 L250 155"/>
+      <circle cx="30" cy="190" r="6"/>
+      <circle cx="110" cy="30" r="6"/>
+      <circle cx="180" cy="30" r="6"/>
+      <circle cx="250" cy="30" r="6"/>
+      <circle cx="140" cy="95" r="6"/>
+      <circle cx="220" cy="95" r="6"/>
+      <circle cx="160" cy="155" r="6"/>
+    </svg>
+    <div class="sec-head rv">
+      <div class="sec-num">05</div>
+      <div class="eyebrow">Fundação técnica</div>
+      <h2 class="section-title">GitHub organizacional da CDT</h2>
+      <p class="section-lead">Hoje os projetos vivem nas contas pessoais do Igor e do Alex. Criar a organização <span class="mono">instituto-cdt</span> no GitHub é o primeiro passo — é o que torna todo o resto possível, inclusive o nosso jeito de desenvolver com IA.</p>
+    </div>
+    <div class="grid3">
+      <div class="pillar rv"><div class="ico">📦</div><h4>Centralização</h4><p>Todos os repositórios migrados para a organização da CDT. O código é patrimônio do Instituto, com acesso controlado por papel.</p></div>
+      <div class="pillar rv"><div class="ico">🔀</div><h4>Versionamento e revisão</h4><p>Branches por demanda, Pull Requests obrigatórios e revisão por outro dev antes de mesclar. Histórico completo de tudo que mudou.</p></div>
+      <div class="pillar rv"><div class="ico">🚀</div><h4>Homologação e deploy</h4><p>Ambientes separados e caminho único até produção. Nada sobe sem passar por homologação.</p></div>
+    </div>
+    <div class="ai-box rv">
+      <div class="ai-head">
+        <div class="ico">✨</div>
+        <div>
+          <h4>Nosso jeito de desenvolver: IA no centro</h4>
+          <p>No Instituto CDT, o desenvolvimento é feito todo (ou quase todo) com auxílio de IA — Claude Code e Lovable. O GitHub organizacional é o que faz esse modelo funcionar em equipe: cada dev clona o projeto, trabalha localmente com o Claude Code e sobe o resultado na branch correta. Todos aceleram com IA, e o projeto permanece único, atualizado e versionado.</p>
+          <p style="margin-top:10px"><strong>Regra do setor:</strong> todo repositório terá um arquivo <span class="mono">CLAUDE.md</span> descrevendo o projeto — stack, convenções, como rodar, o que não tocar. É a documentação que a IA lê: qualquer dev abre qualquer projeto e o Claude Code já trabalha seguindo as regras da casa.</p>
+        </div>
+      </div>
+      <div class="ai-flow" aria-label="Ciclo de desenvolvimento com IA">
+        <span class="env">clona o repositório da CDT</span><span class="env-arrow">→</span>
+        <span class="env">desenvolve local com Claude Code / Lovable</span><span class="env-arrow">→</span>
+        <span class="env">push na branch da demanda</span><span class="env-arrow">→</span>
+        <span class="env">Pull Request + revisão</span>
+      </div>
+    </div>
+    <div class="env-flow rv" aria-label="Fluxo de ambientes">
+      <span class="env">desenvolvimento</span><span class="env-arrow">→</span>
+      <span class="env">homologação</span><span class="env-arrow">→</span>
+      <span class="env prod">produção</span>
+    </div>
+    <div class="callout rv"><strong>Padrão mínimo por repositório:</strong> README com o que o sistema faz e como rodar localmente · <span class="mono">CLAUDE.md</span> com stack, convenções e regras do projeto (a documentação que a IA lê) · guia de deploy · variáveis de ambiente documentadas · registro de decisões importantes. É esse padrão que permite qualquer dev — humano ou com IA — assumir qualquer projeto.</div>
+  </section>
+
+  <section id="ownership">
+    <div class="sec-head rv">
+      <div class="sec-num">06</div>
+      <div class="eyebrow">Quem cuida do quê</div>
+      <h2 class="section-title">Ownership: dono principal + backup</h2>
+      <p class="section-lead">Mantemos o que funciona — quem criou conhece melhor e dá manutenção mais rápida. O que muda: todo sistema ganha um backup e documentação suficiente para que outro dev consiga atuar.</p>
+    </div>
+    <div class="own-table-wrap rv">
+      <table>
+        <thead><tr><th>Sistema</th><th>Dono principal</th><th>Backup</th><th>Documentação</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Área de Membros</strong> (web + apps)</td><td><span class="chip">Igor</span></td><td><span class="chip tbd">definir</span></td><td>A criar</td></tr>
+          <tr><td><strong>CRM</strong></td><td><span class="chip">Igor</span></td><td><span class="chip tbd">definir</span></td><td>A criar</td></tr>
+          <tr><td><strong>Editora</strong></td><td><span class="chip">Igor</span></td><td><span class="chip tbd">definir</span></td><td>A criar</td></tr>
+          <tr><td><strong>Sistema de Pacientes</strong></td><td><span class="chip">Igor</span></td><td><span class="chip tbd">definir</span></td><td>A criar</td></tr>
+          <tr><td><strong>IA Vendedora</strong></td><td><span class="chip">Igor</span></td><td><span class="chip tbd">definir</span></td><td>A criar</td></tr>
+          <tr><td><strong>Checkout</strong></td><td><span class="chip">Alex</span></td><td><span class="chip tbd">definir</span></td><td>A criar</td></tr>
+          <tr><td><strong>Roleta de Leads</strong></td><td><span class="chip">Alex</span></td><td><span class="chip tbd">definir</span></td><td>A criar</td></tr>
+          <tr><td><strong>Site · Landing Pages · Blog</strong></td><td><span class="chip">Alex</span></td><td><span class="chip tbd">definir</span></td><td>A criar</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h3 class="sub-title rv">Integrações, automações e infraestrutura</h3>
+    <p class="section-lead rv" style="margin-bottom:0">Além dos sistemas, o setor cuida das integrações e da infraestrutura. Hoje a divisão é assim — e também precisa de backup e documentação:</p>
+    <div class="own-table-wrap rv">
+      <table>
+        <thead><tr><th>Área</th><th>Responsável hoje</th><th>Observação</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Integrações via API / Webhook</strong></td><td><span class="chip">Igor</span></td><td>Documentar cada integração (o que conecta com o quê)</td></tr>
+          <tr><td><strong>Automações · Make</strong></td><td><span class="chip">Igor</span></td><td>Mapear cenários ativos e o que cada um faz</td></tr>
+          <tr><td><strong>Automações · n8n</strong></td><td><span class="chip">Igor</span> <span class="chip">Alex</span></td><td>Hoje são duas instâncias separadas — avaliar unificação em uma instância do Instituto</td></tr>
+          <tr><td><strong>Google Tag Manager (GTM)</strong></td><td><span class="chip">Alex</span></td><td>Documentar contêineres e tags ativas por site</td></tr>
+          <tr><td><strong>DNS do Instituto</strong></td><td><span class="chip">Alex</span></td><td>Registrar acessos e zonas configuradas</td></tr>
+          <tr><td><strong>Hostinger · VPS</strong></td><td><span class="chip">Igor</span> <span class="chip">Alex</span></td><td>Inventariar servidores, serviços e credenciais</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout rv"><strong>Automações também são código:</strong> cada cenário do Make e workflow do n8n precisa de uma descrição do que faz — e módulos/etapas bem nomeados, para que qualquer dev identifique rapidamente o que cada passo executa. Automação sem descrição quebra em silêncio e ninguém sabe consertar.</div>
+    <div class="callout rv"><strong>Regra de ouro:</strong> nenhum conhecimento pode existir só na cabeça de uma pessoa. Se só um dev consegue mexer num sistema, numa automação ou num acesso, isso é um risco para o Instituto — a documentação é o nosso seguro.</div>
+  </section>
+
+  <section id="onboarding">
+    <div class="sec-head rv">
+      <div class="sec-num">07</div>
+      <div class="eyebrow">Novo dev</div>
+      <h2 class="section-title">Onboarding do Dev Júnior</h2>
+      <p class="section-lead">Entrada progressiva, sob liderança direta do Igor: primeiro conhecer, depois atuar com supervisão, depois ganhar autonomia. Cada fase só avança quando a anterior estiver consolidada.</p>
+    </div>
+    <div class="acc">
+      <div class="acc-item open rv">
+        <button class="acc-btn" aria-expanded="true"><span class="phase">FASE 1</span><span class="t">Imersão e ambiente</span><span class="chev">›</span></button>
+        <div class="acc-body">Conhecer o Instituto, os sistemas e as pessoas. Configurar o ambiente de desenvolvimento usando a documentação — e melhorá-la no processo: o olhar de quem chega encontra as lacunas.
+          <ul><li>Acesso ao GitHub da CDT com permissões de júnior</li><li>Tour guiado pelo ecossistema com Igor e Alex</li><li>Rodar os projetos localmente seguindo o README</li></ul>
+        </div>
+      </div>
+      <div class="acc-item rv">
+        <button class="acc-btn" aria-expanded="false"><span class="phase">FASE 2</span><span class="t">Chamados simples com supervisão</span><span class="chev">›</span></button>
+        <div class="acc-body">Atuar nos chamados de suporte de baixa criticidade, sempre com Pull Request revisado pelo Igor ou Alex antes de qualquer mescla.
+          <ul><li>Ajustes visuais, textos, correções pequenas</li><li>Todo código passa por revisão — sem exceção</li><li>Regra do PR: saber explicar o que cada mudança faz</li><li>1:1 recorrente com Igor para acompanhamento</li></ul>
+        </div>
+      </div>
+      <div class="acc-item rv">
+        <button class="acc-btn" aria-expanded="false"><span class="phase">FASE 3</span><span class="t">Funcionalidades pequenas</span><span class="chev">›</span></button>
+        <div class="acc-body">Assumir demandas completas de menor porte, do desenvolvimento à homologação, com acompanhamento próximo.
+          <ul><li>Primeira feature de ponta a ponta</li><li>Participa da homologação com o solicitante</li><li>Atende chamados com mais autonomia</li></ul>
+        </div>
+      </div>
+      <div class="acc-item rv">
+        <button class="acc-btn" aria-expanded="false"><span class="phase">FASE 4</span><span class="t">Autonomia supervisionada</span><span class="chev">›</span></button>
+        <div class="acc-body">Vira backup de um sistema de menor criticidade e passa a ter fila própria de demandas.
+          <ul><li>Backup oficial de um sistema</li><li>Fila própria de demandas e chamados</li><li>Avaliação de evolução com Igor e Evelin</li></ul>
+        </div>
+      </div>
+    </div>
+    <div class="callout rv"><strong>IA acelera, mas não substitui entendimento:</strong> com Claude Code e Lovable, um júnior produz muito código rápido — e código que ele não entende é dívida disfarçada de produtividade. Por isso a regra: no Pull Request, o dev precisa saber explicar o que cada mudança faz. O review existe para ensinar, não só aprovar.</div>
+    <p class="acc-note rv">A revisão de código continua como prática permanente do time — para todos, não só para o júnior.</p>
+  </section>
+
+  <section id="implantacao" class="band">
+    <div class="sec-head rv">
+      <div class="sec-num">08</div>
+      <div class="eyebrow">Como chegamos lá</div>
+      <h2 class="section-title">Implantação em ondas</h2>
+      <p class="section-lead">Estruturar sem parar a operação: mudanças em ondas, começando pelo que destrava o resto. Cada onda só começa quando a anterior estiver de pé.</p>
+    </div>
+    <div class="road">
+      <div class="road-col rv">
+        <div class="wave">I</div>
+        <h4>Fundação</h4>
+        <p class="sub">O que destrava tudo</p>
+        <ul>
+          <li>Criar a organização <span class="mono">instituto-cdt</span> no GitHub</li>
+          <li>Migrar todos os repositórios das contas pessoais</li>
+          <li>Definir o board único de demandas e suporte no Trello</li>
+          <li>Mapear todos os sistemas: dono + backup</li>
+          <li>Inventário de acessos: DNS, Hostinger, VPS, APIs e automações</li>
+          <li>Preparar a chegada do Dev Júnior (acessos, plano)</li>
+        </ul>
+      </div>
+      <div class="road-col rv">
+        <div class="wave">II</div>
+        <h4>Processos</h4>
+        <p class="sub">A rotina do setor</p>
+        <ul>
+          <li>README + <span class="mono">CLAUDE.md</span> padrão em todos os repositórios</li>
+          <li>Pull Request + revisão como regra do time</li>
+          <li>Descrição e nomenclatura padrão nas automações (Make e n8n)</li>
+          <li>Reunião de priorização funcionando</li>
+          <li>Onboarding do júnior em andamento</li>
+          <li>Ambiente de homologação nos sistemas críticos</li>
+          <li>Avaliar a unificação dos dois n8n em uma instância do Instituto</li>
+        </ul>
+      </div>
+      <div class="road-col rv">
+        <div class="wave">III</div>
+        <h4>Consolidação</h4>
+        <p class="sub">Setor rodando redondo</p>
+        <ul>
+          <li>Fluxo dev → homolog → produção em todos os projetos</li>
+          <li>Documentação completa dos sistemas prioritários</li>
+          <li>Relatório do setor para Evelin e Thiago</li>
+          <li>Métricas simples: demandas entregues, tempo de produção</li>
+          <li>Revisão do que funcionou e ajuste dos processos</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="fim">
+    <div class="next rv">
+      <h3>Decisões para hoje</h3>
+      <ol>
+        <li>Validar a estrutura e a linha de reporte apresentadas</li>
+        <li>Aprovar a criação do GitHub organizacional da CDT</li>
+        <li>Definir o formato do board de demandas/suporte no Trello</li>
+        <li>Fechar o mapa de ownership: donos e backups de cada sistema</li>
+        <li>Alinhar o plano de onboarding do Dev Júnior</li>
+      </ol>
+    </div>
+    <footer>Setor de Tecnologia · Instituto CDT — apresentação interna · preparada por Igor</footer>
+  </section>
+</main>
+
+<script>
+  // organograma interativo
+  const ORG = {
+    thiago:{t:"Thiago — CEO",itens:[
+      "Direção executiva do Instituto e patrocínio da estruturação do setor",
+      "Aprova investimentos de tecnologia (ferramentas, contratações, infraestrutura)",
+      "Recebe relatório periódico do setor via Evelin"]},
+    evelin:{t:"Evelin — Diretoria de TI",itens:[
+      "Ponte entre a estratégia do Instituto e o setor de tecnologia",
+      "Define prioridades macro e valida demandas de grande porte",
+      "Acompanha resultados do setor junto com Igor"]},
+    igor:{t:"Igor — Dev Sênior · Líder técnico",itens:[
+      "Lidera o setor: triagem, priorização e distribuição das demandas",
+      "Responsável pelos padrões técnicos: GitHub, revisão de código, ambientes, documentação",
+      "Dono principal de Área de Membros, CRM, Editora, Sistema de Pacientes e IA Vendedora",
+      "Integrações via API/Webhook e automações no Make; n8n junto com o Alex",
+      "Liderança direta do Dev Júnior (onboarding, 1:1, desenvolvimento)",
+      "Reporta à Evelin"]},
+    alex:{t:"Alex — Dev Pleno",itens:[
+      "Referência técnica do time e segundo revisor de código",
+      "Dono principal de Checkout, Roleta de Leads, Site, Landing Pages e Blog",
+      "Automações no n8n (junto com o Igor), Google Tag Manager e gestão do DNS do Instituto",
+      "Apoia o onboarding e a evolução técnica do Dev Júnior",
+      "Assume a frente técnica na ausência do Igor"]},
+    junior:{t:"Novo Dev — Júnior (em breve)",itens:[
+      "Entrada progressiva: imersão → chamados supervisionados → features pequenas",
+      "Todo código revisado por Igor ou Alex antes de ir para produção",
+      "Liderança direta e acompanhamento recorrente com Igor",
+      "Meta: virar backup de um sistema de menor criticidade"]}
+  };
+  const detail=document.getElementById('org-detail');
+  const dTitle=document.getElementById('org-detail-title');
+  const dList=document.getElementById('org-detail-list');
+  document.querySelectorAll('.org-card').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const key=btn.dataset.org, wasOpen=btn.getAttribute('aria-pressed')==='true';
+      document.querySelectorAll('.org-card').forEach(b=>b.setAttribute('aria-pressed','false'));
+      if(wasOpen){detail.hidden=true;return}
+      btn.setAttribute('aria-pressed','true');
+      const d=ORG[key];
+      dTitle.textContent=d.t;
+      dList.innerHTML='';
+      d.itens.forEach(i=>{const li=document.createElement('li');li.textContent=i;dList.appendChild(li)});
+      detail.hidden=false;
+    });
+  });
+
+  // tabs de fluxo
+  document.querySelectorAll('.tab').forEach(tab=>{
+    tab.addEventListener('click',()=>{
+      document.querySelectorAll('.tab').forEach(t=>t.setAttribute('aria-selected','false'));
+      tab.setAttribute('aria-selected','true');
+      document.querySelectorAll('[data-flow-panel]').forEach(p=>{
+        p.hidden = p.dataset.flowPanel !== tab.dataset.flow;
+      });
+    });
+  });
+
+  // accordion
+  document.querySelectorAll('.acc-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const item=btn.closest('.acc-item');
+      const open=item.classList.toggle('open');
+      btn.setAttribute('aria-expanded',open?'true':'false');
+    });
+  });
+
+  // reveal on scroll
+  const rvObs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){e.target.classList.add('in');rvObs.unobserve(e.target)}
+    });
+  },{threshold:.12,rootMargin:'0px 0px -6% 0px'});
+  document.querySelectorAll('.rv').forEach(el=>rvObs.observe(el));
+
+  // barra de progresso de leitura
+  const bar=document.getElementById('progress');
+  const setBar=()=>{
+    const h=document.documentElement;
+    const max=h.scrollHeight-h.clientHeight;
+    bar.style.width=(max>0?(h.scrollTop/max)*100:0)+'%';
+  };
+  document.addEventListener('scroll',setBar,{passive:true});
+  setBar();
+
+  // contadores do hero
+  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!reduced){
+    document.querySelectorAll('.hero-stats .n[data-count]').forEach(el=>{
+      const target=+el.dataset.count, suffix=el.dataset.suffix||'';
+      const t0=performance.now(), dur=1100;
+      const tick=now=>{
+        const p=Math.min((now-t0)/dur,1);
+        const eased=1-Math.pow(1-p,3);
+        el.textContent=Math.round(target*eased)+suffix;
+        if(p<1)requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    });
+  }
+
+  // nav ativa por scroll
+  const links=[...document.querySelectorAll('.topnav a')];
+  const secs=links.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  const navObs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        links.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+e.target.id));
+      }
+    });
+  },{rootMargin:'-40% 0px -55% 0px'});
+  secs.forEach(s=>navObs.observe(s));
+</script>
+</body>
+</html>
