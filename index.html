@@ -61,7 +61,10 @@
   }
 
   *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
+  html{scroll-behavior:smooth;overflow-x:hidden}
+  @supports (overflow:clip){
+    html,body{overflow-x:clip}
+  }
   body{
     margin:0;background:var(--bg);color:var(--ink);
     font-family:"Segoe UI Variable Text","Segoe UI",system-ui,-apple-system,sans-serif;
