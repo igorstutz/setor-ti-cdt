@@ -93,12 +93,25 @@
     backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
     border-bottom:1px solid var(--line);
     display:flex;align-items:center;gap:2px;
-    padding:10px 24px;overflow-x:auto;
+    padding:10px 24px;
   }
   .topnav .brand{font-weight:700;font-size:14px;letter-spacing:.04em;color:var(--accent-ink);margin-right:14px;white-space:nowrap}
   .topnav a{font-size:13px;color:var(--ink-2);text-decoration:none;padding:6px 11px;border-radius:99px;white-space:nowrap}
   .topnav a:hover{background:var(--surface-2);color:var(--ink)}
   .topnav a.active{background:var(--accent-soft);color:var(--accent-ink);font-weight:600}
+  .nav-links{display:flex;align-items:center;gap:2px;min-width:0;overflow-x:auto}
+  .menu-btn{display:none;margin-left:auto;flex-direction:column;justify-content:center;align-items:stretch;gap:5px;width:42px;height:38px;border-radius:9px;padding:9px 10px}
+  .menu-btn:hover{background:var(--surface-2)}
+  .menu-btn span{display:block;height:2px;border-radius:2px;background:var(--ink);transition:transform .25s ease,opacity .2s ease}
+  .topnav.open .menu-btn span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .topnav.open .menu-btn span:nth-child(2){opacity:0}
+  .topnav.open .menu-btn span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  @media (max-width:840px){
+    .menu-btn{display:flex}
+    .nav-links{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:stretch;gap:4px;overflow:visible;background:var(--bg);border-bottom:1px solid var(--line);padding:10px 16px 16px;box-shadow:var(--shadow-lg)}
+    .topnav.open .nav-links{display:flex}
+    .nav-links a{padding:12px 14px;border-radius:10px;font-size:15px}
+  }
 
   main{max-width:1020px;margin:0 auto;padding:0 24px 96px}
   section{padding-top:88px;position:relative}
@@ -508,6 +521,8 @@
 <div class="progress" id="progress" aria-hidden="true"></div>
 <nav class="topnav" aria-label="Seções">
   <span class="brand">CDT · TI</span>
+  <button class="menu-btn" id="menu-btn" aria-expanded="false" aria-label="Abrir menu" aria-controls="nav-links"><span></span><span></span><span></span></button>
+  <div class="nav-links" id="nav-links">
   <a href="#visao">Visão</a>
   <a href="#ecossistema">Ecossistema</a>
   <a href="#estrutura">Estrutura</a>
@@ -516,6 +531,7 @@
   <a href="#ownership">Ownership</a>
   <a href="#onboarding">Onboarding</a>
   <a href="#implantacao">Implantação</a>
+  </div>
 </nav>
 
 <main>
@@ -990,6 +1006,19 @@
     });
   },{threshold:.12,rootMargin:'0px 0px -6% 0px'});
   document.querySelectorAll('.rv').forEach(el=>rvObs.observe(el));
+
+  // menu hamburguer (mobile)
+  const menuBtn=document.getElementById('menu-btn');
+  const topnav=document.querySelector('.topnav');
+  menuBtn.addEventListener('click',()=>{
+    const open=topnav.classList.toggle('open');
+    menuBtn.setAttribute('aria-expanded',open?'true':'false');
+    menuBtn.setAttribute('aria-label',open?'Fechar menu':'Abrir menu');
+  });
+  document.querySelectorAll('.nav-links a').forEach(a=>a.addEventListener('click',()=>{
+    topnav.classList.remove('open');
+    menuBtn.setAttribute('aria-expanded','false');
+  }));
 
   // barra de progresso de leitura
   const bar=document.getElementById('progress');
